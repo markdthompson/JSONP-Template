@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>JSON-P Template Demo</title>
+<meta name="description" content="Farmsense JSON-P Template Demonstration">
+<meta name="author" content="mark@farmsense.net">
+
+<script>
+// <![CDATA[
+
+var myService = {	
+	resource01 : {
+		// give it a random id so we can clean it up later
+		id: ((new Date()).getTime() + "" + Math.floor(Math.random()*1000000)).substr(0,18),
+
+		getJSONP: function(){
+			// the url of the script we're calling
+			var url = "http://dev.api.farmsense.net/v1/jsonp.php?callback=myService.resource01.parseRequest&r=Resource01";
+			// create a new script element
+			var script = document.createElement('script');
+			// set the id attribute to something random so we can clean up later without worrying
+			script.setAttribute('id', this.id);
+			// set the src attribute to that url
+			script.setAttribute('src', url);
+			// insert the script in out page
+			document.getElementsByTagName('head')[0].appendChild(script);
+		},
+ 
+		// parse responses
+		parseRequest: function(response){
+			try {// try to output this to the javascript console
+				console.log(response);
+			} catch(an_exception) {// alert for the users that don't have a javascript console
+				alert(response.anumber + ', ' + response.astring + ', ' + response.aboolean);
+			}
+		
+			// delete the dynamic script tag to clean up
+			element = document.getElementById(this.id);
+			element.parentNode.removeChild(element);
+		}
+	},
+	
+	resource02 : {
+		// give it a random id so we can clean it up later
+		id: ((new Date()).getTime() + "" + Math.floor(Math.random()*1000000)).substr(0,18),
+
+		getJSONP: function(){
+			// the url of the script we're calling
+			var url = "http://dev.api.farmsense.net/v1/jsonp.php?callback=myService.resource02.parseRequest&r=Resource02";
+			// create a new script element
+			var script = document.createElement('script');
+			// set the id attribute to something random so we can clean up later without worrying
+			script.setAttribute('id', this.id);
+			// set the src attribute to that url
+			script.setAttribute('src', url);
+			// insert the script in out page
+			document.getElementsByTagName('head')[0].appendChild(script);
+		},
+ 
+		// parse responses 
+		parseRequest: function(response){
+			try {// try to output this to the javascript console
+				console.log(response);
+			} catch(an_exception) {// alert for the users that don't have a javascript console
+				alert(response.anumber + ', ' + response.astring + ', ' + response.aboolean);
+			}
+		
+			// delete the dynamic script tag to clean up
+			element = document.getElementById(this.id);
+			element.parentNode.removeChild(element);
+		}
+	}
+}
+// ]]>
+</script>
+
+</head>
+<body>
+<h1>JSON-P Template Demo</h1>
+<p>This demo is a lightweight demonstration of JSON-P and can be used as a template for building other apps.</p>
+<p>Open your browser's Javascript console, Firebug, or other Javascript browser tool and click on the links below to see your output.</p>
+<a href="#" onclick="myService.resource01.getJSONP()">Click to access Resource 1</a><br />
+<a href="#" onclick="myService.resource02.getJSONP()">Click to access Resource 2</a>
+
+</body>
+</html>
